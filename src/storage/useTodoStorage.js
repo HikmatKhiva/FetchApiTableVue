@@ -13,7 +13,8 @@ export const useTodoStorage = defineStore('todo', {
             totalCounts: 0,
         },
         page: 0,
-        search: ''
+        search: '',
+        selectedItem: null
     }),
     actions: {
         async fetchTodo() {
@@ -53,6 +54,13 @@ export const useTodoStorage = defineStore('todo', {
         },
         searchProduct(products, name) {
             return products.filter(product => product.title.toLocaleLowerCase().includes(name.trim().toLocaleLowerCase()))
+        },
+        handleSelectItem(item) {
+            this.selectedItem = item
+            console.log(this.selectedItem);
+        },
+        clearSelectItem() {
+            this.selectedItem = null
         }
     }
 })

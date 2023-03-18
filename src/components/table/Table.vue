@@ -2,7 +2,7 @@
     <table class="table-auto w-full">
         <TableHead />
         <tbody class="text-sm divide-y  divide-gray-100">
-            <TableItem :clicked="todo.clicked" :deleteApi="todo.deleteTodo" v-for="item in data" :item="item" :key="item.id" />
+            <TableItem :clicked="todo.clicked" :handleSelectItem="todo.handleSelectItem" :deleteApi="todo.deleteTodo" v-for="item in data" :item="item" :key="item.id" />
         </tbody>
     </table>
 </template>
