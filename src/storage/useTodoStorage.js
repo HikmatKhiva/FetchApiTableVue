@@ -14,7 +14,8 @@ export const useTodoStorage = defineStore('todo', {
         },
         page: 0,
         search: '',
-        selectedItem: null
+        selectedItem: null,
+        selectedItemIndex: null
     }),
     actions: {
         async fetchTodo() {
@@ -47,20 +48,39 @@ export const useTodoStorage = defineStore('todo', {
             this.fetchTodo()
         },
         handlePageBtn(name) {
-            if (name === 'prev') { this.page -= 10 };
-            if (name === 'next') { this.page += 10 };
+            name === 'prev' ? this.page -= 10 : this.page += 10
             this.options.skip = this.page
             this.fetchTodo()
         },
         searchProduct(products, name) {
             return products.filter(product => product.title.toLocaleLowerCase().includes(name.trim().toLocaleLowerCase()))
         },
-        handleSelectItem(item) {
+        handleSelectItem(item, index) {
             this.selectedItem = item
-            console.log(this.selectedItem);
+            this.selectedItemIndex = index
         },
         clearSelectItem() {
             this.selectedItem = null
+            this.selectedItemIndex = null
+        },
+        async updateTodo(id, title, price) {
+            if (!title.length) return toast.error("Title mustn't empty")
+            if (!price) return toast.error("Price mustn't empty")
+            if (!id) return toast.error("Id mustn't empty")
+
+            try {
+                this.clicked = true
+                await fetch(this.url + '/' + id, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        title,
+                        price
+                    })
+                })
+                this.clearSelectItem()
+                this.clicked = false
+            } catch (error) { toast.error(error.message || 'Something went wrong') }
         }
     }
 })
