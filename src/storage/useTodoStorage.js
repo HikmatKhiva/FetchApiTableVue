@@ -18,6 +18,7 @@ export const useTodoStorage = defineStore('todo', {
         selectedItemIndex: null
     }),
     actions: {
+        /* Initialize Fetch Todo Data */
         async fetchTodo() {
             try {
                 this.loading = true
@@ -32,6 +33,7 @@ export const useTodoStorage = defineStore('todo', {
                 this.loading = false
             } catch (error) { toast.error(error.message || 'something went wrong') }
         },
+        /* Todo item deleted  */
         async deleteTodo(id) {
             try {
                 this.clicked = true
@@ -41,46 +43,54 @@ export const useTodoStorage = defineStore('todo', {
                 this.clicked = false
             } catch (error) { toast.error(error.message || 'something went wrong') }
         },
+        /* Search product name */
         handleSearch(newValue) { this.search = newValue },
+        /* Change Pagination Function */
         handlePage(number) {
             this.page = (number * 10) - 10
             this.options.skip = this.page
             this.fetchTodo()
         },
+        /* Pagination Prev  */
         handlePageBtn(name) {
             name === 'prev' ? this.page -= 10 : this.page += 10
             this.options.skip = this.page
             this.fetchTodo()
         },
+        /* filter products  */
         searchProduct(products, name) {
             return products.filter(product => product.title.toLocaleLowerCase().includes(name.trim().toLocaleLowerCase()))
         },
+        /* Handle selected todo */
         handleSelectItem(item, index) {
             this.selectedItem = item
             this.selectedItemIndex = index
         },
+        /* Clear Selected Item */
         clearSelectItem() {
             this.selectedItem = null
             this.selectedItemIndex = null
         },
+        /* Update todo item title price  */
         async updateTodo(id, title, price) {
             if (!title.length) return toast.error("Title mustn't empty")
             if (!price) return toast.error("Price mustn't empty")
             if (!id) return toast.error("Id mustn't empty")
-
             try {
-                this.clicked = true
-                await fetch(this.url + '/' + id, {
+                let res = await fetch(this.url + '/' + id, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        title,
-                        price
+                        title: title,
+                        price: price,
                     })
                 })
-                this.clearSelectItem()
-                this.clicked = false
-            } catch (error) { toast.error(error.message || 'Something went wrong') }
+                let jsonData = await res.json();
+                this.todo.splice(this.selectedItemIndex, 1, jsonData);
+                this.clearSelectItem();
+                toast.success(`${id} updated`);
+            }
+            catch (error) { toast.error(error.message || 'Something went wrong') }
         }
     }
 })

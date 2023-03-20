@@ -2,7 +2,7 @@
     <teleport to=".modal">
         <dialog @click.self="todo.clearSelectItem"
             class="m-0 main-modal fixed w-screen h-screen inset-0 z-50 overflow-hidden flex justify-center items-center animated fadeIn faster"
-            v-if="selectedItem">
+            v-if="todo.selectedItem">
             <div
                 class="border modal-container bg-white w-11/12 md:max-w-2xl mx-auto rounded shadow-lg z-50 overflow-y-auto">
                 <div class="modal-content py-4 text-left px-6">
@@ -20,13 +20,13 @@
                     </div>
                     <!--Body-->
                     <div class="my-5">
-                        <form @submit.prevent="handleModal(selectedItem.id)" class=" flex gap-5 flex-wrap">
+                        <form @submit.prevent="handleModal(todo.selectedItem.id)" class=" flex gap-5 flex-wrap">
                             <input v-model="title" type="text"
                                 class="border rounded-md shadow focus outline-none px-3 py-1 flex-grow"
-                                :placeholder="selectedItem.title">
+                                :placeholder="todo.selectedItem.title">
                             <input v-model="price" type="number"
                                 class="border rounded-md shadow focus outline-none px-3 py-1 flex-grow"
-                                :placeholder="selectedItem.price + '$'">
+                                :placeholder="todo.selectedItem.price + '$'">
                             <button :disabled="todo.clicked"
                                 class="focus:outline-none cursor-pointer p-2 px-3 md:px-4 capitalize bg-green-500 md:p-3 ml-3 rounded-lg text-white hover:bg-green-600">save</button>
                         </form>
@@ -40,23 +40,19 @@
     </teleport>
 </template>
 <script setup>
-import { defineProps, ref } from 'vue';
+import { ref } from 'vue';
 import { useTodoStorage } from '../../storage/useTodoStorage';
 const todo = useTodoStorage()
-const props = defineProps({
-    selectedItem: {
-        type: Object
-    },
-})
+
 const price = ref('')
 const title = ref('')
+
 const handleModal = (id) => {
-    todo.updateTodo(id, title, price)
+    todo.updateTodo(id, title.value, price.value)
     title.value = ''
     price.value = ''
 }
 </script>
-
 <style scoped>
 .animated {
     -webkit-animation-duration: 1s;
@@ -64,17 +60,14 @@ const handleModal = (id) => {
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
 }
-
 .animated.faster {
     -webkit-animation-duration: 500ms;
     animation-duration: 500ms;
 }
-
 .fadeIn {
     -webkit-animation-name: fadeIn;
     animation-name: fadeIn;
 }
-
 .fadeOut {
     -webkit-animation-name: fadeOut;
     animation-name: fadeOut;
