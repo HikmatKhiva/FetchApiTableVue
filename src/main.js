@@ -1,17 +1,18 @@
+import './assets/main.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import './style.css'
+// Vue Toast
+import ToastPlugin from 'vue-toast-notification'
+import 'vue-toast-notification/dist/theme-bootstrap.css'
+// Vue motion
+import { MotionPlugin } from '@vueuse/motion'
 import App from './App.vue'
-import { createVfm } from 'vue-final-modal'
-import Vue3Toasity from 'vue3-toastify'
-import 'vue3-toastify/dist/index.css'
-import 'vue-final-modal/style.css'
+import router from './router'
 
-const vfm = createVfm()
-createApp(App)
-    .use(Vue3Toasity, {
-        autoClose: 3000,
-    })
-    .use(vfm)
-    .use(createPinia())
-    .mount('#app')
+const app = createApp(App)
+app.use(ToastPlugin)
+app.use(MotionPlugin)
+app.use(createPinia())
+app.use(router)
+
+app.mount('#app')

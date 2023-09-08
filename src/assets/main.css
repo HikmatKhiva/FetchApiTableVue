@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.product__card {
+    width: calc(25% - 20px);
+}
+li .router-link-exact-active {
+    @apply font-extrabold text-gray-400;
+    text-decoration: underline;
+}
+.page_btn:first-child a {
+    border-radius: 5px 0px 0px 5px;
+}
+.page_btn:last-child a {
+    border-radius: 0px 5px 5px 0px;
+}
+@media screen and (max-width:1024px) {
+    .container {
+        padding: 0px 20px;
+    }
+    .product__card {
+        width: calc(33% - 20px);
+    }
+}
+@media screen and (max-width:768px) {
+    .product__card {
+        width: calc(50% - 20px);
+    }
+}
+@media screen and (max-width:576px) {
+    .product__card {
+        width: 100%;
+    }
+}
