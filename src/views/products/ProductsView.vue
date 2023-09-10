@@ -25,6 +25,7 @@
           <Pagination
             :totalPages="state.totalPages"
             :handleClickPageNumber="state.handleClickPageNumber"
+            :page="state.computedPage"
           />
         </div>
       </div>
@@ -37,8 +38,9 @@ import { ProductCard, PageLoading, Pagination } from '../../components'
 // Vue
 import { onMounted } from 'vue'
 // Storage
-import { useProducts } from '../../stores/products'
+import { useProducts } from '../../storage/products'
 const state = useProducts()
 // LifeCycles
+// console.log(state.computedPage);
 onMounted(() => state.fetchProducts())
 </script>

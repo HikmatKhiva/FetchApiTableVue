@@ -1,7 +1,3 @@
-<!-- v-motion="{
-  initial: { scale: 0.5 },
-  enter: { scale: 1, transition: { delay: index * 0.3, type: 'spring' } }
-}" -->
 <template>
   <!--Products Card -->
   <figure
@@ -45,7 +41,7 @@
   </figure>
 </template>
 <script setup>
-import { useProducts } from '../stores/products'
+import { useProducts } from '../storage/products'
 // Utils
 import { fadeCard } from '../utils/motion'
 const state = useProducts()

@@ -25,6 +25,7 @@
           <Pagination
             :totalPages="state.totalPages"
             :handleClickPageNumber="state.handleClickPageNumber"
+            :page="state.computedPage"
           />
         </div>
       </div>
@@ -37,7 +38,7 @@ import { UserCard, PageLoading, Pagination } from '../../components'
 // Vue
 import { onMounted } from 'vue'
 // Storage
-import { useUsers } from '../../stores/users'
+import { useUsers } from '../../storage/users'
 const state = useUsers()
 // LifeCycles
 onMounted(() => state.fetchUsers())

@@ -51,7 +51,7 @@
   </figure>
 </template>
 <script setup>
-import { useUsers } from '../stores/users'
+import { useUsers } from '../storage/users'
 import { fadeCard } from '../utils/motion'
 const state = useUsers()
 defineProps({

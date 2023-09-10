@@ -10,7 +10,6 @@ export const usePosts = defineStore('posts', () => {
   const totalPages = ref(0)
   const limit = ref(10)
   const skip = ref(0)
-  const page = ref(0)
   const toast = useToast()
   // Fetch Products
   const fetchPosts = async () => {
@@ -32,8 +31,7 @@ export const usePosts = defineStore('posts', () => {
   }
   // Pagination Posts
   const handleClickPageNumber = (number) => {
-    page.value = number * 10 - 10
-    skip.value = page.value
+    skip.value = number * 10 - 10
     fetchPosts()
   }
   // Delete Posts
@@ -50,8 +48,9 @@ export const usePosts = defineStore('posts', () => {
       toast.error(err.message)
     }
   }
-  // computedPosts
+  // Computed Values
   const computedPosts = computed(() => posts.value)
+  const computedPage = computed(() => skip.value)
   // Get Tags
   const tags = computed(() => [...new Set(posts.value?.flatMap((post) => post.tags))])
   const handleFilter = (value) => (filter.value = value)
@@ -64,6 +63,7 @@ export const usePosts = defineStore('posts', () => {
     handlePostDelete,
     computedPosts,
     tags,
-    handleFilter
+    handleFilter,
+    computedPage
   }
 })

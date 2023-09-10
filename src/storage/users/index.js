@@ -10,7 +10,6 @@ export const useUsers = defineStore('users', () => {
   const totalPages = ref(0)
   const limit = ref(10)
   const skip = ref(0)
-  const page = ref(0)
   const toast = useToast()
   // Fetch Users
   const fetchUsers = async () => {
@@ -32,8 +31,7 @@ export const useUsers = defineStore('users', () => {
   }
   // Handle Pagination
   const handleClickPageNumber = (number) => {
-    page.value = number * 10 - 10
-    skip.value = page.value
+    skip.value = number * 10 - 10
     fetchUsers()
   }
   // Handle Delete user
@@ -56,7 +54,7 @@ export const useUsers = defineStore('users', () => {
       user.firstName.toLowerCase().includes(search.value.toLowerCase().trim())
     )
   )
-  const computedPage = computed(() => page.value)
+  const computedPage = computed(() => skip.value)
   return {
     computedUsers,
     fetchUsers,

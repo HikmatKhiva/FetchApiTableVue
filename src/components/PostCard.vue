@@ -1,5 +1,7 @@
 <template>
+  <!-- Post Card -->
   <figure
+    v-motion="fadeCard(index * 0.2)"
     class="border relative p-5 rounded font-roboto w-full flex-grow transition-all duration-700"
     :class="{ 'bg-green-500 text-white': post.tags.includes(filter) }"
     :style="post.tags.includes(filter) && `order:-${index}`"
@@ -39,7 +41,8 @@
   </figure>
 </template>
 <script setup>
-import { usePosts } from '../stores/posts'
+import { usePosts } from '../storage/posts'
+import { fadeCard } from '../utils/motion'
 const state = usePosts()
 defineProps({
   post: {

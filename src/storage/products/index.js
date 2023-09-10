@@ -10,7 +10,6 @@ export const useProducts = defineStore('products', () => {
   const totalPages = ref(0)
   const limit = ref(10)
   const skip = ref(0)
-  const page = ref(0)
   const toast = useToast()
   // Fetch Products
   const fetchProducts = async () => {
@@ -32,8 +31,7 @@ export const useProducts = defineStore('products', () => {
   }
   // Pagination Products
   const handleClickPageNumber = (number) => {
-    page.value = number * 10 - 10
-    skip.value = page.value
+    skip.value = number * 10 - 10
     fetchProducts()
   }
   // Delete Products
@@ -56,7 +54,7 @@ export const useProducts = defineStore('products', () => {
       product.title.toLowerCase().includes(search.value.toLowerCase().trim())
     )
   )
-  const computedPage = computed(() => page.value)
+  const computedPage = computed(() => skip.value)
   return {
     fetchProducts,
     loading,
@@ -67,7 +65,6 @@ export const useProducts = defineStore('products', () => {
     computedProducts,
     computedPage,
     products,
-    page,
     skip
   }
 })

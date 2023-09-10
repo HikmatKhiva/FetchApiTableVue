@@ -36,7 +36,12 @@
           </div>
         </div>
       </div>
-      <Pagination :totalPages="state.totalPages" class="mt-3" />
+      <Pagination
+        :totalPages="state.totalPages"
+        :handleClickPageNumber="state.handleClickPageNumber"
+        :page="state.computedPage"
+        class="mt-3"
+      />
     </div>
   </section>
 </template>
@@ -46,7 +51,7 @@ import { PostCard, Pagination } from '../../components'
 // Vue
 import { onMounted } from 'vue'
 // Stores
-import { usePosts } from '../../stores/posts'
+import { usePosts } from '../../storage/posts'
 const state = usePosts()
 // LifeCycle
 onMounted(() => state.fetchPosts())
